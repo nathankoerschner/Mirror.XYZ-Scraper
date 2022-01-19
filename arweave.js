@@ -56,8 +56,8 @@ const findAll = async (startBlock, endBlock, initialStep) => {
                 console.log(data);
                 console.log(numberOfResults)
                 if ( numberOfResults == 100 && step != 1){
-                    currentBlock = currentBlock - step; // rewind to the previous block (accounting for end of while loop where step is added back)
                     step = step/10; // change to a smaller step
+                    currentBlock = currentBlock - step; // rewind to the previous block (accounting for end of while loop where step is added back)
                     console.log("Changed Step to ", step)
                 } else {results = results.concat(data);}
             });
