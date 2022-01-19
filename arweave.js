@@ -44,18 +44,24 @@ const requestData = async (startBlock, step) => {
 
 
 
-const findAll = async (startBlock, endBlock, step) => {
-    startBlock = 550000;
-    endBlock = 750000;// 
-    step = 1000;
-    results = [];
+const findAll = async (startBlock, endBlock, initialStep) => {
+    let step = initialStep
+    let results = [];
 
     currentBlock = startBlock
     while (currentBlock < endBlock) {
             console.log("\n\n\n Current Block is ", currentBlock);
             await requestData(currentBlock, step).then((data) => {
-                results = results.concat(data);
+                let numberOfResults = Object.keys(data).length;
+                console.log(data);
+                console.log(numberOfResults)
+                if ( numberOfResults == 100 && step != 1){
+                    currentBlock = currentBlock - step; // rewind to the previous block (accounting for end of while loop where step is added back)
+                    step = step/10; // change to a smaller step
+                    console.log("Changed Step to ", step)
+                } else {results = results.concat(data);}
             });
+            
         currentBlock += step;
     }
 
@@ -64,5 +70,5 @@ const findAll = async (startBlock, endBlock, step) => {
     fs.writeFileSync(`blocks_${startBlock}_to_${endBlock}.json`, jsonData);
 }
 
-findAll(550000, 750000, 1000); // first Arweave transaction is at 559678, 751000 is where they get dense
-findAll(750000, 900000, 100)
+//findAll(550000, 750000, 1000); // first Arweave transaction is at 559678, 751000 is where they get dense
+findAll(750000, 900000, 100) // find the next chunk
