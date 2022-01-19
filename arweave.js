@@ -44,9 +44,9 @@ const requestData = async (startBlock, step) => {
 
 
 
-const findAll = async () => {
-    startBlock = 550000; // first Arweave transaction is at 559678
-    endBlock = 750000;// 751000 is where they get dense
+const findAll = async (startBlock, endBlock, step) => {
+    startBlock = 550000;
+    endBlock = 750000;// 
     step = 1000;
     results = [];
 
@@ -64,4 +64,5 @@ const findAll = async () => {
     fs.writeFileSync(`blocks_${startBlock}_to_${endBlock}.json`, jsonData);
 }
 
-findAll();
+findAll(550000, 750000, 1000); // first Arweave transaction is at 559678, 751000 is where they get dense
+findAll(750000, 900000, 100)
