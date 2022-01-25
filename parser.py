@@ -46,6 +46,11 @@ print(contributersWithNPosts(5))
 n = 0
 forNpostsNumberOfContributers = []
 while n < 100:
-    forNpostsNumberOfContributers.append(contributersWithNPosts(n))
+    forNpostsNumberOfContributers.append([n, contributersWithNPosts(n)])
     n += 1
-print(forNpostsNumberOfContributers)
+
+df1 = pd.DataFrame(
+    forNpostsNumberOfContributers,
+    columns=["Number of posts in contributers history", "Number of contributers"],
+)
+df1.to_csv("contributerAmounts.csv")
