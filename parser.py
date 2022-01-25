@@ -36,9 +36,7 @@ def contributersWithNPosts(n):
 
 
 print(len(postCounts))  # 18412 total contributers on mirror, with
-print(
-    contributersWithNPosts(1)
-)  # only 8745 have published only once, a little over half have published more than once
+print(contributersWithNPosts(1))  # 8745 have published a single time
 print(contributersWithNPosts(2))
 print(contributersWithNPosts(3))
 print(contributersWithNPosts(4))
