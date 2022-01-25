@@ -1,20 +1,24 @@
 const fs = require ('fs')
-const reqData = require('./request.js')
+const { reqData, httpsRequest } = require('./request.js')
 
 
 
-var array = fs.readFileSync('mirrorTickets.csv', 'utf-8')
+
+const fetchData = async (array) =>{
+
+    let promises = array.map( async x => {
+        setTimeout(()=>reqData(x[1]), 1000)
+        return
+    });
+}
+
+const run = async () => {
+    var ticketArray = fs.readFileSync('mirrorTickets.csv', 'utf-8')
     .split('\n')
     .map(line => line.split(","));
 
-const fetchData = async () =>{
-    let promises = array.map( async x => {
-
-    });
-    
-    for await (const val of promises){
-        console.log(val.response);
-    }
+    fetchData(ticketArray)
 }
 
-fetchData()
+run()
+

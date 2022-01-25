@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "follow-redirects": "^1.14.7",
-    "graphql-request": "^3.7.0",
-    "request": "^2.88.2"
-  }
-}
