@@ -20,9 +20,6 @@ df = pd.DataFrame(cleanedTickets, columns=["transactionId", "Contributer"])
 df.to_csv("mirrorTickets.csv")
 df.to_json("mirrorTickets.json")
 
-# fig, ax = plt.subplots()
-# df["Contributer"].value_counts(False, True, False).plot(ax=ax, kind='bar', xlabel='numbers', ylabel='frequency')
-# plt.show()
 
 postCounts = df["Contributer"].value_counts(False, True, True)
 
@@ -35,17 +32,10 @@ def contributersWithNPosts(n):
     return len(publications)
 
 
-print(len(postCounts))  # 18412 total contributers on mirror, with
-print(contributersWithNPosts(1))  # 8745 have published a single time
-print(contributersWithNPosts(2))
-print(contributersWithNPosts(3))
-print(contributersWithNPosts(4))
-print(contributersWithNPosts(5))
-
 # create a list of all frequencies of different numbers of posts
 n = 0
 forNpostsNumberOfContributers = []
-while n < 100:
+while n < 484:
     forNpostsNumberOfContributers.append([n, contributersWithNPosts(n)])
     n += 1
 
@@ -54,3 +44,4 @@ df1 = pd.DataFrame(
     columns=["Number of posts in contributers history", "Number of contributers"],
 )
 df1.to_csv("contributerAmounts.csv")
+df["Contributer"].value_counts(False, True, False).to_csv("addressesAndFrequencies.csv")
