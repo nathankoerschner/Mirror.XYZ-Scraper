@@ -15,13 +15,16 @@ const reqData = async function (id) {
 
 	const req = https.request(options, async (res) => {
 		console.log(`statusCode: ${res.statusCode}`);
-
-		res.on("data", (d) => {
-			fetched = d.toString();
-			console.log("ID is ", id);
+		let body = "";
+		res.on("data", (chunk) => {
 			if (res.statusCode == 200) {
-				fs.writeFileSync(`data/${id}.json`, JSON.stringify(d.toString()));
+				console.log("data recieved");
+				body += chunk;
 			}
+		});
+		res.on("end", () => {
+			console.log("ID is ", id);
+			fs.writeFileSync(`data/${id}.json`, JSON.stringify(body));
 		});
 	}); // end request callback
 
