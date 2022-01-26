@@ -38,6 +38,8 @@ const requestData = async (startBlock, step) => {
 	return toReturn;
 };
 
+// uses the query defined above to fetch all transactions matching this query between the blocks specified.
+// includes a step variation feature, which changes the range based on the density of results, to efficiantly fetch data while complying with rate limits.
 const findAll = async (startBlock, endBlock, initialStep) => {
 	let step = initialStep;
 	let results = [];
@@ -69,5 +71,5 @@ const findAll = async (startBlock, endBlock, initialStep) => {
 	fs.writeFileSync(`blocks_${startBlock}_to_${endBlock}.json`, jsonData);
 };
 
-//findAll(550000, 860000, 1000); // first Arweave transaction is at 559678, 751000 is where they get dense
-findAll(750000, 860000, 1000);
+// first Arweave transaction is at 559678, 751000 is where they start to get dense
+findAll(550000, 860000, 1000);
