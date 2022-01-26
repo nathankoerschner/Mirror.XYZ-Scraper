@@ -17,11 +17,15 @@ for x in d:
 
 
 df = pd.DataFrame(cleanedTickets, columns=["transactionId", "Contributer"])
+df = df.drop_duplicates()
 df.to_csv("mirrorTickets.csv")
 df.to_json("mirrorTickets.json")
 
 
 postCounts = df["Contributer"].value_counts(False, True, True)
+ticketTotalUnique = df["transactionId"].value_counts(False, True, False)
+
+print(ticketTotalUnique)
 
 
 def contributersWithNPosts(n):
