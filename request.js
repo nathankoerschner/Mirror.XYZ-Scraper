@@ -18,7 +18,10 @@ const reqData = async function (id) {
 
 		res.on("data", (d) => {
 			fetched = d.toString();
-			fs.writeFileSync(`data/${id}.json`, JSON.stringify(d.toString()));
+			console.log("ID is ", id);
+			if (res.statusCode == 200) {
+				fs.writeFileSync(`data/${id}.json`, JSON.stringify(d.toString()));
+			}
 		});
 	}); // end request callback
 
