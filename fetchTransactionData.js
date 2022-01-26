@@ -46,13 +46,13 @@ const fetchMissing = async (array) => {
 	return arrayOfLostTickets;
 };
 
-const run = async () => {
+const run = async (pathToCSV) => {
 	var ticketArray = fs
-		.readFileSync("mirrorTickets.csv", "utf-8")
+		.readFileSync(pathToCSV, "utf-8")
 		.split("\n")
 		.map((line) => line.split(","));
 	console.log(ticketArray.length);
 	fetchData(ticketArray);
 };
 
-run();
+run("arrayOfFailedIds.csv");

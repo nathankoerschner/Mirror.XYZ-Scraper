@@ -69,7 +69,9 @@ const findAll = async (startBlock, endBlock, initialStep) => {
 	console.log(results);
 	let jsonData = JSON.stringify(results);
 	fs.writeFileSync(`blocks_${startBlock}_to_${endBlock}.json`, jsonData);
+	return results;
 };
 
 // first Arweave transaction is at 559678, 751000 is where they start to get dense
-findAll(550000, 860000, 1000);
+// steps should be a multiple of 10
+module.exports = { findAll };
