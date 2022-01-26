@@ -23,9 +23,9 @@ df.to_json("mirrorTickets.json")
 
 
 postCounts = df["Contributer"].value_counts(False, True, True)
-ticketTotalUnique = df["transactionId"].value_counts(False, True, False)
-
-print(ticketTotalUnique)
+ticketTotalUnique = df["transactionId"].value_counts(
+    False, True, False
+)  # verifies that there is one contributer for each post
 
 
 def contributersWithNPosts(n):
