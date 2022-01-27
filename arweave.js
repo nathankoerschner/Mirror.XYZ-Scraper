@@ -40,7 +40,7 @@ const requestData = async (startBlock, step) => {
 
 // uses the query defined above to fetch all transactions matching this query between the blocks specified.
 // includes a step variation feature, which changes the range based on the density of results, to efficiantly fetch data while complying with rate limits.
-const findAll = async (startBlock, endBlock, initialStep) => {
+const findAllArweaveTxs = async (startBlock, endBlock, initialStep) => {
 	let step = initialStep;
 	let results = [];
 
@@ -74,4 +74,4 @@ const findAll = async (startBlock, endBlock, initialStep) => {
 
 // first Arweave transaction is at 559678, 751000 is where they start to get dense
 // steps should be a multiple of 10
-module.exports = { findAll };
+module.exports = { findAllArweaveTxs };

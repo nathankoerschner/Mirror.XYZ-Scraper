@@ -1,8 +1,9 @@
 const fs = require("fs");
 const { reqData } = require("./request.js");
 const util = require("util");
+const { array } = require("assert-plus");
 
-const waitForPromise = async (promised, continuation = () => true) => {
+const waitForPromise = (promised, continuation = () => true) => {
 	let interval = setInterval(() => {
 		let pending = util.inspect(promised).includes("pending");
 		if (!pending) {
@@ -12,7 +13,7 @@ const waitForPromise = async (promised, continuation = () => true) => {
 	}, 1000);
 };
 
-const fetchData = async (array) => {
+const fetchData = (array) => {
 	console.log(array.length);
 	let maxIterations = 4;
 	if (array.length < maxIterations) {
@@ -46,13 +47,12 @@ const fetchMissing = async (array) => {
 	return arrayOfLostTickets;
 };
 
-const run = async (pathToCSV) => {
-	var ticketArray = fs
+const arrayFromCSV = async (pathToCSV) => {
+	var array = fs
 		.readFileSync(pathToCSV, "utf-8")
 		.split("\n")
 		.map((line) => line.split(","));
-	console.log(ticketArray.length);
-	fetchData(ticketArray);
+	return array;
 };
 
-run("arrayOfFailedIds.csv");
+module.exports = { fetchData };
