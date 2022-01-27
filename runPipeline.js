@@ -1,7 +1,7 @@
 const { fstat } = require("fs");
 const { findAllArweaveTxs } = require("./arweave");
 const { fetchData } = require("./fetchTransactionData");
-const { exportData } = require("./readJsons");
+const { exportData } = require("./exportDataToSingleFile");
 
 const pipeline = async (startBlock, endBlock, pathToJSONOutput) => {
 	let tickets = await findAllArweaveTxs(startBlock, endBlock, 1000);

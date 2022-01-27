@@ -1,7 +1,15 @@
 const fs = require("fs");
 const path = require("path");
 
-// Make an async function that gets executed immediately
+const readJsonFromPath = async (path) => {
+	try {
+		const data = await JSON.parse(fs.readFileSync(`./data/${path}`));
+		return data;
+	} catch {
+		console.error(`Unable to load and parse ${path}`);
+	}
+};
+
 const exportData = async (directory, jsonPath) => {
 	let failedArray = [];
 	let finalArray = [];
@@ -46,15 +54,6 @@ const exportData = async (directory, jsonPath) => {
 	} catch (e) {
 		// Catch anything bad that happens
 		console.error("We've thrown! Whoops!", e);
-	}
-};
-
-const readJsonFromPath = async (path) => {
-	try {
-		const data = await JSON.parse(fs.readFileSync(`./data/${path}`));
-		return data;
-	} catch {
-		console.error(`Unable to load and parse ${path}`);
 	}
 };
 
