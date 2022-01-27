@@ -23,6 +23,7 @@ const reqData = async function (id) {
 		});
 		res.on("end", () => {
 			fs.writeFileSync(`data/${id}.json`, JSON.stringify(body));
+			return body;
 			// output this record to the data file.
 		});
 	}); // end request callback
