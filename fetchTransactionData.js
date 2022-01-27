@@ -1,7 +1,5 @@
-const fs = require("fs");
 const { reqData } = require("./request.js");
 const util = require("util");
-const { array } = require("assert-plus");
 
 const waitForPromise = (promised, continuation = () => true) => {
 	let interval = setInterval(() => {
@@ -29,30 +27,6 @@ const fetchData = (array) => {
 			});
 		}
 	}
-};
-
-// for finding any left off transactions
-const fetchMissing = async (array) => {
-	let arrayOfLostTickets = array.filter((row) => {
-		return !fs.existsSync(`./data/${row[1]}.json`);
-	});
-
-	let arrayOfExistingTickets = array.filter((row) => {
-		return fs.existsSync(`./data/${row[1]}.json`);
-	});
-
-	console.log(arrayOfExistingTickets.length);
-	fs.writeFileSync("unfetched.json", JSON.stringify(arrayOfLostTickets));
-	console.log(arrayOfLostTickets);
-	return arrayOfLostTickets;
-};
-
-const arrayFromCSV = async (pathToCSV) => {
-	var array = fs
-		.readFileSync(pathToCSV, "utf-8")
-		.split("\n")
-		.map((line) => line.split(","));
-	return array;
 };
 
 module.exports = { fetchData };

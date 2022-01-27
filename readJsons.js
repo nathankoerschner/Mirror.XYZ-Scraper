@@ -2,8 +2,9 @@ const fs = require("fs");
 const path = require("path");
 
 // Make an async function that gets executed immediately
-const touchEachFile = async (directory, returnArray, jsonPath) => {
+const exportData = async (directory, jsonPath) => {
 	let failedArray = [];
+	let finalArray = [];
 	// Our starting point
 	try {
 		// Get the files as an array
@@ -13,20 +14,35 @@ const touchEachFile = async (directory, returnArray, jsonPath) => {
 		for (const path of filePaths) {
 			const data = await readJsonFromPath(path);
 			try {
-				returnArray.push(JSON.parse(data));
+				finalArray.push(JSON.parse(data));
 			} catch {
 				failedArray.push(path.slice(0, -5));
 			}
 		} // End for...of
+
+		finalArray = finalArray.map((row) => {
+			if (row["authorship"]) {
+				let newRow = {
+					contributer: row["authorship"]["contributor"],
+					publication: row["content"]["publication"],
+					title: row["content"]["title"],
+					body: row["content"]["body"],
+					timestamp: row["content"]["timestamp"],
+				};
+				return newRow;
+			} else {
+				console.log(row);
+			}
+		});
+		fs.writeFileSync(jsonPath, JSON.stringify(finalArray));
+		fs.writeFileSync(`omitted.json`, JSON.stringify(failedArray));
 		console.log(
-			`\nSuccess!\nCreated ${jsonPath}, which has ${returnArray.length} items.\n`
+			`\nSuccess!\nCreated ${jsonPath}, which has ${finalArray.length} items.\n`
 		);
 		console.log(
-			`failed array had ${failedArray.length} items that were not included. \n(See ./failedToTransform.json)`
+			`See ./omitted.json for a list of the ${failedArray.length} omitted items`
 		);
-		fs.writeFileSync(jsonPath, JSON.stringify(returnArray));
-		fs.writeFileSync(`failedToTransform.json`, JSON.stringify(failedArray));
-		return returnArray;
+		return finalArray;
 	} catch (e) {
 		// Catch anything bad that happens
 		console.error("We've thrown! Whoops!", e);
@@ -40,13 +56,6 @@ const readJsonFromPath = async (path) => {
 	} catch {
 		console.error(`Unable to load and parse ${path}`);
 	}
-};
-
-const exportData = (location, jsonPath) => {
-	let finalArray = [];
-	const data = touchEachFile(location, finalArray, jsonPath);
-
-	fs.writeFileSync(jsonPath, JSON.stringify(data));
 };
 
 module.exports = { exportData };

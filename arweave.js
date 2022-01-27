@@ -40,7 +40,12 @@ const requestData = async (startBlock, step) => {
 
 // uses the query defined above to fetch all transactions matching this query between the blocks specified.
 // includes a step variation feature, which changes the range based on the density of results, to efficiantly fetch data while complying with rate limits.
-const findAllArweaveTxs = async (startBlock, endBlock, initialStep) => {
+const findAllArweaveTxs = async (
+	startBlock,
+	endBlock,
+	initialStep,
+	writeToFile = false
+) => {
 	let step = initialStep;
 	let results = [];
 
@@ -49,8 +54,6 @@ const findAllArweaveTxs = async (startBlock, endBlock, initialStep) => {
 		console.log("\n\n\n Current Block is ", currentBlock);
 		await requestData(currentBlock, step).then((data) => {
 			let numberOfResults = Object.keys(data).length;
-			console.log(data);
-			console.log(numberOfResults);
 			if (numberOfResults == 100 && step != 1) {
 				step = step / 10; // change to a smaller step
 				currentBlock = currentBlock - step; // rewind to the previous block (accounting for end of while loop where step is added back)
@@ -65,10 +68,10 @@ const findAllArweaveTxs = async (startBlock, endBlock, initialStep) => {
 
 		currentBlock += step;
 	}
-
-	console.log(results);
-	let jsonData = JSON.stringify(results);
-	fs.writeFileSync(`blocks_${startBlock}_to_${endBlock}.json`, jsonData);
+	if (writeToFile) {
+		let jsonData = JSON.stringify(results);
+		fs.writeFileSync(`blocks_${startBlock}_to_${endBlock}.json`, jsonData);
+	}
 	return results;
 };
 
