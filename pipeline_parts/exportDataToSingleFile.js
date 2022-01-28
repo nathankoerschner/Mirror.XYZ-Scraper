@@ -22,7 +22,9 @@ const exportData = async (directory, jsonPath) => {
 		for (const path of filePaths) {
 			const data = await readJsonFromPath(path);
 			try {
-				finalArray.push(JSON.parse(data));
+				let obj = JSON.parse(data);
+				obj["id"] = path;
+				finalArray.push(obj);
 			} catch {
 				failedArray.push(path.slice(0, -5));
 			}
@@ -37,6 +39,7 @@ const exportData = async (directory, jsonPath) => {
 					body: row["content"]["body"] || "",
 					timestamp: row["content"]["timestamp"] || "",
 					nft: row["nft"] || "",
+					transaction: row["id"],
 				};
 				return newRow;
 			} else {
@@ -57,5 +60,7 @@ const exportData = async (directory, jsonPath) => {
 		console.error("We've thrown! Whoops!", e);
 	}
 };
+
+exportData("./data", "../data.json");
 
 module.exports = { exportData };
