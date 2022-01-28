@@ -13,5 +13,8 @@ Each record in the eventual array has the following structure:
 	publication: "My Blog,
 	title: "Arweave is cool",
 	body: "In this essay, ... ",
-	timestamp: 1643322525}`
+	timestamp: 1643322525,
+	nft: {},
+	transaction: "sdfeife343j29fa"
+	}`
   
