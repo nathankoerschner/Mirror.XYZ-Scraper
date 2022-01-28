@@ -1,5 +1,6 @@
 # Mirror.XYZ Scraper
 Uses the Arweave graph ql to collect all transactions matching a given query.
+
 Built and configured to fetch all Mirror.XYZ publications.
 
 To gather all Mirror.XYZ publications between two Arweave blocks and output to a JSON, run `node runPipeline <startBlock> <endBlock> '<desiredPath>.json'`.
