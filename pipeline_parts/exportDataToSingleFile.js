@@ -31,11 +31,12 @@ const exportData = async (directory, jsonPath) => {
 		finalArray = finalArray.map((row) => {
 			if (row["authorship"]) {
 				let newRow = {
-					contributer: row["authorship"]["contributor"],
-					publication: row["content"]["publication"],
-					title: row["content"]["title"],
-					body: row["content"]["body"],
-					timestamp: row["content"]["timestamp"],
+					contributer: row["authorship"]["contributor"] || "",
+					publication: row["content"]["publication"] || "",
+					title: row["content"]["title"] || "",
+					body: row["content"]["body"] || "",
+					timestamp: row["content"]["timestamp"] || "",
+					nft: row["nft"] || "",
 				};
 				return newRow;
 			} else {
