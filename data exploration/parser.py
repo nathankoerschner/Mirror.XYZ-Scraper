@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-with open("allMirrorData.json") as json_data:
+with open("./allMirrorData.json") as json_data:
     d = json.load(json_data)
 
 # create a list of lists with ticket, [contributers]
@@ -18,8 +18,6 @@ for x in d:
 
 df = pd.DataFrame(cleanedTickets, columns=["transactionId", "Contributer"])
 df = df.drop_duplicates()
-df.to_csv("mirrorTickets.csv")
-df.to_json("mirrorTickets.json")
 
 
 postCounts = df["Contributer"].value_counts(False, True, True)
